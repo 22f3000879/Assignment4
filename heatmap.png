@@ -1,0 +1,19 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the data
+# Make sure the csv file is in the same directory
+df = pd.read_csv('q-excel-correlation-heatmap.xlsx - Supply_Chain_Data.csv')
+
+# Calculate Correlation
+corr = df.corr()
+
+# Plot Heatmap
+plt.figure(figsize=(8, 6))
+sns.heatmap(corr, annot=True, cmap='RdYlGn', center=0, vmin=-1, vmax=1)
+plt.title('Supply Chain Correlation Matrix')
+
+# Save the image
+plt.savefig('heatmap.png')
+print("heatmap.png created successfully.")
