@@ -3,17 +3,33 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Load the data
-# Make sure the csv file is in the same directory
 df = pd.read_csv('q-excel-correlation-heatmap.xlsx - Supply_Chain_Data.csv')
 
 # Calculate Correlation
 corr = df.corr()
 
 # Plot Heatmap
-plt.figure(figsize=(8, 6))
-sns.heatmap(corr, annot=True, cmap='RdYlGn', center=0, vmin=-1, vmax=1)
-plt.title('Supply Chain Correlation Matrix')
+# Requirement: 400x400 to 512x512 pixels.
+# Setting figsize=(5, 5) with dpi=100 results in exactly 500x500 pixels.
+plt.figure(figsize=(5, 5), dpi=100)
 
-# Save the image
-plt.savefig('heatmap.png')
-print("heatmap.png created successfully.")
+# Create heatmap with Red-White-Green colormap
+sns.heatmap(
+    corr, 
+    annot=True, 
+    cmap='RdYlGn', 
+    center=0, 
+    vmin=-1, 
+    vmax=1, 
+    square=True, 
+    fmt='.2f',
+    cbar=False, # Hide colorbar to save space and keep dimensions square
+    annot_kws={"size": 8} # Adjust font size for smaller chart
+)
+
+plt.title('Correlation Matrix', fontsize=10)
+plt.tight_layout()
+
+# Save the image with a white background
+plt.savefig('heatmap.png', dpi=100, format='png', facecolor='white')
+print("heatmap.png created successfully (500x500 pixels).")
